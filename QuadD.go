@@ -5,38 +5,60 @@ import (
 )
 
 func QuadD(x, y int) {
-	// check for zero or negative values of x and y
-	if x <= 0 || y <= 0 {
-		return
-	}
+	// top to bottom outer for loop
 	for i := 0; i < y; i++ {
 		for j := 0; j < x; j++ {
-			if i == 0 && j == 0 {
-				// 90deg => Top left conner 
-				z01.PrintRune('A')
-			} else if i == y-1 && j == 0 {
-				// 270deg => Bottom left conner
-				z01.PrintRune('A')
-			} else if i == 0 && j == x-1 {
-				// 90deg => Top right conner
-				z01.PrintRune('C')
-			} else if i == y-1 && j == x-1 {
-				// 180deg => Bottom right
-				z01.PrintRune('C')
-			} else if i == 0 || i == y-1 {
-				// top or bottom line
-				// the horizontal characters
-				z01.PrintRune('B')
-			} else if j == 0 || j == x-1 {
-				// left and right margins
-				// the vertical middle characters
-				z01.PrintRune('B')
-			} else {
-				// middle spaces
-				z01.PrintRune(' ')
+			// avoid getting into the if statement whenever x less than 0 or y is less than 0
+			if !(x <= 0 || y <= 0) {
+				// x and y are both greater than 0
+				// test for the top(i == 0) and bottom(i == y-1) line condition
+				if i == 0 || i == (y-1) {
+					// either we are in the top or bottom line
+					//  test for conners
+					if i == 0 && j == 0 {
+						// top-left conner
+						z01.PrintRune('A')
+						// check for the special input combination (1, 1)
+						// append a new line after
+						if x == 1 && y == 1 {
+							z01.PrintRune('\n')
+						} else if x == 1 {
+							// if x is 1 but y is any other number
+							// skip to the next line
+							z01.PrintRune('\n')
+						}
+					} else if i == 0 && j == (x-1) {
+						// top-right
+						z01.PrintRune('C')
+						z01.PrintRune('\n')
+					} else if i == (y-1) && j == (x-1) {
+						// bottom-right
+						z01.PrintRune('C')
+						z01.PrintRune('\n')
+					} else if i == (y-1) && j == 0 {
+						// bottom-left conner
+						z01.PrintRune('A')
+					} else {
+						// the horrizontal characters in the top or bottom lines
+						// j > 0 and  j < x
+						z01.PrintRune('B')
+					}
+				} else {
+					// we are in the lines where i > 0 and i < (y-1)
+					if j == 0 {
+						z01.PrintRune('B')
+						if x == 1 {
+							z01.PrintRune('\n')
+						}
+					} else if j == (x - 1) {
+						z01.PrintRune('B')
+						z01.PrintRune('\n')
+					} else {
+						// we are in positions that need spaces
+						z01.PrintRune(' ')
+					}
+				}
 			}
 		}
-		// line per line spacing
-		z01.PrintRune('\n')
 	}
 }
