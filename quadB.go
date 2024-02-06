@@ -5,11 +5,15 @@ import (
 )
 
 func QuadB(x, y int) {
-	// top to bottom outer for loop
-	for i := 0; i < y; i++ {
-		for j := 0; j < x; j++ {
-			// avoid getting into the if statement whenever x less than 0 or y is less than 0
-			if !(x <= 0 || y <= 0) {
+	// exit if either or both x and y are 0
+	if x <= 0 || y <= 0 {
+		return
+	} else {
+		// top to bottom outer for loop ranges from i to y-1
+		for i := 0; i < y; i++ {
+			for j := 0; j < x; j++ {
+				// avoid getting into the if statement whenever x less than 0 or y is less than 0
+
 				// x and y are both greater than 0
 				// test for the top(i == 0) and bottom(i == y-1) line condition
 				if i == 0 || i == (y-1) {
@@ -51,7 +55,7 @@ func QuadB(x, y int) {
 							z01.PrintRune('\n')
 						}
 					} else if j == (x - 1) {
-						z01.PrintRune('*')
+						z01.PrintRune('|')
 						z01.PrintRune('\n')
 					} else {
 						// we are in positions that need spaces
